@@ -4,7 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
 
-
+// категория
 @Entity
 @Table(name = "categories")
 public class Category {

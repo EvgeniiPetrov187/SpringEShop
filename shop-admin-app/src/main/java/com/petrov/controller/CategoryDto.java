@@ -6,7 +6,7 @@ import com.petrov.persist.Product;
 import java.util.List;
 import java.util.Objects;
 
-// категория
+/// категория
 public class CategoryDto {
 
     private Long id;

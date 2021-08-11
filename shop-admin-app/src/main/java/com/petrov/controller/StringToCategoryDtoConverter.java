@@ -12,4 +12,5 @@ public class StringToCategoryDtoConverter implements Converter<String, CategoryD
         String[] arr = s.split(";");
         return new CategoryDto(Long.parseLong(arr[0]), arr[1]);
     }
+    //
 }

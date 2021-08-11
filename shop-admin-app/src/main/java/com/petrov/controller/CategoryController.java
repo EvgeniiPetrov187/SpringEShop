@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.util.stream.Collectors;
 
-// контроллер категорий
+/// контроллер категорий
 @Controller
 @RequestMapping("/categories")
 public class CategoryController {

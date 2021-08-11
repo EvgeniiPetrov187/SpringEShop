@@ -20,6 +20,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> , JpaSpe
             @Param("minPrice") BigDecimal minPrice,
             @Param("maxPrice") BigDecimal maxPrice
     );
-
+//
 }
 
