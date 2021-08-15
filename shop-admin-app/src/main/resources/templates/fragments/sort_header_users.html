@@ -1,0 +1,17 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<th scope="col" th:fragment="sort_header (header, title)">[[${header}]]
+    <a th:href="@{/users(
+                        page=${param.page},
+                        size=${users.size},
+                        sort=${title},
+                        direction=${userListParam.getReverse()},
+                        titleFilter=${param.titleFilter},
+                        minAgeFilter=${param.minAgeFilter},
+                        maxAgeFilter=${param.maxAgeFilter})}">
+        <i class="fa" th:classappend="${#strings.equals(#request.getParameter('direction'), 'desc')} ? 'fa-sort-down' : 'fa-sort-up'"></i>
+    </a>
+</th>
+
+
+</html>

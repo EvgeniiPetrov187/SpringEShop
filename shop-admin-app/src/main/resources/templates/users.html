@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/head :: head"></head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light" th:replace="fragments/navigation :: navigation"></nav>
+
+<div class="container">
+    <div class="row py-2">
+        <div class="col-12" sec:authorize="hasRole('SUPER_ADMIN')">
+            <a class="btn btn-primary" th:href="@{/users/new}">Add User</a>
+        </div>
+        <div class="col-12 mt-3">
+            <form class="form-inline" th:method="get">
+                <div class="form-group mb-2 mr-2">
+                    <label for="titleFilter" class="sr-only">Title filter</label>
+                    <input type="text" class="form-control" id="titleFilter" th:value="${param.titleFilter}"
+                           name="titleFilter" placeholder="Title Filter"/>
+                </div>
+                <div class="form-group mb-2 mr-2">
+                    <label for="minAgeFilter" class="sr-only">Min age filter</label>
+                    <input type="number" class="form-control" id="minAgeFilter" th:value="${param.minAgeFilter}"
+                           name="minAgeFilter" placeholder="Min Age"/>
+                </div>
+
+                <div class="form-group mb-2 mr-2">
+                    <label for="maxAgeFilter" class="sr-only">Max age filter</label>
+                    <input type="number" class="form-control" id="maxAgeFilter" th:value="${param.maxAgeFilter}"
+                           name="maxAgeFilter" placeholder="Max Price"/>
+                </div>
+                <button type="submit" class="btn btn-primary mb-2">Apply</button>
+
+            </form>
+
+        </div>
+
+        <div class="col-12">
+            <table class="table table-bordered my-2">
+                <thead>
+                <tr>
+                    <th scope="col" th:replace="fragments/sort_header_users :: sort_header ('Id', 'id')">
+                    </th>
+
+                    <th scope="col" th:replace="fragments/sort_header_users :: sort_header ('User name', 'username')">
+                    </th>
+
+                    <th scope="col" th:replace="fragments/sort_header_users :: sort_header ('Age', 'age')">
+                    </th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${users.hasContent()}" th:each="user : ${users.content}">
+                    <th scope="row" th:text="${user.id}">1</th>
+                    <td th:text="${user.username}">Arnold</td>
+                    <td th:text="${user.age}">30</td>
+                    <td sec:authorize="hasRole('SUPER_ADMIN')">
+                        <a class="btn btn-success" th:href="@{/users/{id}(id = ${user.id})}">
+                            <i class="fas fa-edit"></i></a>
+                        <form class="d-inline" th:method="delete" th:action="@{/users/{id}(id = ${user.id})}">
+                            <button type="submit" a class="btn btn-danger">
+                                <i class="far fa-trash-alt"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                <tr th:unless="${users.hasContent()}">
+                    <td colspan="4">No users</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div th:if="${users.hasContent()}" class="col-12">
+            <nav aria-label="...">
+                <ul class="pagination">
+
+                    <li th:if="${users.hasPrevious()}" class="page-item">
+                        <a class="page-link"
+                           th:replace="fragments/paging_users :: paging ('Previos', ${users.getNumber()})"></a>
+                    </li>
+                    <li th:unless="${users.hasPrevious()}" class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+
+                    <li th:each="num : ${#numbers.sequence(1, users.totalPages)}"
+                        th:classappend="${num == users.number +1} ? 'active'"
+                        class="page-item">
+                        <a class="page-link"
+                           th:text="${num}"
+                           th:replace="fragments/paging_users :: paging (${num}, ${num})"></a>
+                    </li>
+
+                    <li th:if="${users.hasNext()}" class="page-item">
+                        <a class="page-link"
+                           th:replace="fragments/paging_users :: paging ('Next', ${users.getNumber()+2})"></a>
+                    </li>
+                    <li th:unless="${users.hasNext()}" class="page-item disabled">
+                        <a class="page-link">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+
+<th:block th:replace="fragments/scripts :: scripts"></th:block>
+</body>
+</html>
