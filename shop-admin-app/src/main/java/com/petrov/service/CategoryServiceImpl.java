@@ -55,5 +55,6 @@ public class CategoryServiceImpl implements CategoryService {
                 .map(product -> new CategoryDto(product.getId(), product.getTitle()))
                 .collect(Collectors.toList());
     }
+    //
 }
 

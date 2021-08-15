@@ -74,5 +74,6 @@ public class Product {
     public String showCategory() {
         return category.getTitle();
     }
+    //
 }
 

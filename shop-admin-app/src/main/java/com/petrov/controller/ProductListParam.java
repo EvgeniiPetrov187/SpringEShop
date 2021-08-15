@@ -81,8 +81,8 @@ public class ProductListParam {
             return "asc";
         }
     }
-
     public void setReverse(String reverse) {
         this.reverse = reverse;
     }
+    //
 }

@@ -89,7 +89,7 @@ public class ProductServiceImpl implements ProductService {
                 .collect(Collectors.toList());
     }
 
-    // метод для сохранения категории продукта из categoryDto
+    /// метод для сохранения категории продукта из categoryDto
     private static Category mapCategoryDto(CategoryDto categoryDto) {
         Category category = new Category(categoryDto.getId(), categoryDto.getTitle());
         return category;

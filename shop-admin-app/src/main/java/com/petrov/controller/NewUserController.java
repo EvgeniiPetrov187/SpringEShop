@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.validation.Valid;
 import java.util.stream.Collectors;
 
-// регистрация нового пользователя
+
 @Controller
 public class NewUserController {
     private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
