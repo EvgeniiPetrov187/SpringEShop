@@ -1,45 +1,14 @@
 package com.petrov.controller;
 
 
+public class BrandListParam {
 
-import java.math.BigDecimal;
-
-
-public class ProductListParam {
-
-    private String titleFilter;
-    private BigDecimal minPriceFilter;
-    private BigDecimal maxPriceFilter;
     private Integer page;
     private Integer size;
     private String sort;
     private String direction;
     private String reverse;
 
-
-    public String getTitleFilter() {
-        return titleFilter;
-    }
-
-    public void setTitleFilter(String titleFilter) {
-        this.titleFilter = titleFilter;
-    }
-
-    public BigDecimal getMinPriceFilter() {
-        return minPriceFilter;
-    }
-
-    public void setMinPriceFilter(BigDecimal minPriceFilter) {
-        this.minPriceFilter = minPriceFilter;
-    }
-
-    public BigDecimal getMaxPriceFilter() {
-        return maxPriceFilter;
-    }
-
-    public void setMaxPriceFilter(BigDecimal maxPriceFilter) {
-        this.maxPriceFilter = maxPriceFilter;
-    }
 
     public Integer getPage() {
         return page;
@@ -85,3 +54,5 @@ public class ProductListParam {
         this.reverse = reverse;
     }
 }
+
+

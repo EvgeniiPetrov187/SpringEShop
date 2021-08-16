@@ -1,6 +1,7 @@
 package com.petrov.controller;
 
 
+import com.petrov.controller.dto.CategoryDto;
 import com.petrov.persist.CategoryRepository;
 import com.petrov.service.CategoryService;
 import org.slf4j.Logger;
@@ -16,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.util.stream.Collectors;
 
-/// контроллер категорий
 @Controller
 @RequestMapping("/categories")
 public class CategoryController {
@@ -35,9 +35,9 @@ public class CategoryController {
 
 
     @GetMapping
-    public String listPage(Model model) {
+    public String listPage(Model model, CategoryListParam categoryListParam) {
         logger.info("Category list page requested");
-        model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("categories", categoryService.findWithFilter(categoryListParam));
         return "categories";
     }
 
@@ -61,7 +61,7 @@ public class CategoryController {
     }
 
     @PostMapping
-    public String update(@Valid CategoryDto categoryDto, BindingResult result, Model model) {
+    public String update(@Valid CategoryDto categoryDto, BindingResult result) {
         logger.info("Saving category");
 
         if (result.hasErrors()) {
@@ -87,6 +87,5 @@ public class CategoryController {
         modelAndView.setStatus(HttpStatus.NOT_FOUND);
         return modelAndView;
     }
-
 }
 

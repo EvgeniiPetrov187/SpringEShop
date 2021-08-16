@@ -2,11 +2,10 @@ package com.petrov.service;
 
 
 
-import com.petrov.controller.CategoryDto;
-import com.petrov.controller.ProductDto;
-import com.petrov.controller.ProductListParam;
-import com.petrov.controller.UserDto;
-import com.petrov.persist.*;
+import com.petrov.controller.*;
+import com.petrov.controller.dto.CategoryDto;
+import com.petrov.persist.model.Category;
+import com.petrov.persist.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,7 +17,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-// класс будет доработан по фильтрам
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
@@ -29,6 +27,28 @@ public class CategoryServiceImpl implements CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
+    @Override
+    public Page<CategoryDto> findWithFilter(CategoryListParam categoryListParam) {
+        Specification<Category> spec = Specification.where(null);
+
+        if (categoryListParam.getSort() != null && !categoryListParam.getSort().isEmpty()) {
+            return categoryRepository.findAll(spec,
+                            PageRequest.of(
+                                    Optional.ofNullable(categoryListParam.getPage()).orElse(1) - 1,
+                                    Optional.ofNullable(categoryListParam.getSize()).orElse(3),
+                                    Optional.of(Optional.ofNullable(categoryListParam.getDirection()).orElse("asc").equalsIgnoreCase("desc") ?
+                                            Sort.by(categoryListParam.getSort()).descending() :
+                                            Sort.by(categoryListParam.getSort()).ascending()).get()))
+                    .map(category -> new CategoryDto(category.getId(), category.getTitle()));
+        } else {
+            return categoryRepository.findAll(spec,
+                            PageRequest.of(
+                                    Optional.ofNullable(categoryListParam.getPage()).orElse(1) - 1,
+                                    Optional.ofNullable(categoryListParam.getSize()).orElse(3)))
+                    .map(category -> new CategoryDto(category.getId(), category.getTitle()));
+        }
+    }
+
 
     @Override
     public Optional<CategoryDto> findById(Long id) {
@@ -37,10 +57,10 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void save(CategoryDto productDto) {
+    public void save(CategoryDto categoryDto) {
         Category category = new Category(
-                productDto.getId(),
-                productDto.getTitle());
+                categoryDto.getId(),
+                categoryDto.getTitle());
         categoryRepository.save(category);
     }
 
@@ -52,9 +72,8 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<CategoryDto> findAll() {
         return categoryRepository.findAll().stream()
-                .map(product -> new CategoryDto(product.getId(), product.getTitle()))
+                .map(category -> new CategoryDto(category.getId(), category.getTitle()))
                 .collect(Collectors.toList());
     }
-    //
 }
 

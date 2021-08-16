@@ -1,12 +1,11 @@
-package com.petrov.controller;
+package com.petrov.controller.dto;
 
-import com.petrov.persist.Category;
-import com.petrov.persist.Product;
+import com.petrov.persist.model.Category;
+import com.petrov.persist.model.Product;
 
 import java.util.List;
 import java.util.Objects;
 
-/// категория
 public class CategoryDto {
 
     private Long id;
@@ -18,6 +17,10 @@ public class CategoryDto {
     public CategoryDto (Long id, String title) {
         this.id = id;
         this.title = title;
+    }
+
+    public CategoryDto (Long id) {
+        this.id = id;
     }
 
     public CategoryDto () {

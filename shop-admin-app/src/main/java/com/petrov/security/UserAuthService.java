@@ -1,8 +1,6 @@
 package com.petrov.security;
 
-import com.petrov.controller.RoleDto;
-import com.petrov.persist.Role;
-import com.petrov.persist.RoleRepository;
+import com.petrov.persist.model.Role;
 
 import com.petrov.persist.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

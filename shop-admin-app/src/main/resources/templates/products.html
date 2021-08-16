@@ -10,7 +10,7 @@
 
 <div class="container">
     <div class="row py-2">
-        <div class="col-12" sec:authorize="hasRole('SUPER_ADMIN')">
+        <div class="col-12" sec:authorize="hasRole('SUPER_ADMIN') or hasRole('ADMIN')">
             <a class="btn btn-primary" th:href="@{/products/new}">Add Product</a>
         </div>
         <div class="col-12 mt-3">
@@ -42,16 +42,20 @@
                 <thead>
                 <tr>
 
-                    <th scope="col" th:replace="fragments/sort_header :: sort_header ('Id', 'id', )">
+                    <th scope="col" th:replace="fragments/sort_header :: sort_header_product ('Id', 'id')">
                     </th>
 
-                    <th scope="col" th:replace="fragments/sort_header :: sort_header ('Product name', 'name')">
+                    <th scope="col" th:replace="fragments/sort_header :: sort_header_product ('Product name', 'name')">
                     </th>
 
-                    <th scope="col" th:replace="fragments/sort_header :: sort_header ('Price', 'cost')">
+                    <th scope="col" th:replace="fragments/sort_header :: sort_header_product ('Price', 'cost')">
                     </th>
 
-                    <th scope="col">Category</th>
+                    <th scope="col" th:replace="fragments/sort_header :: sort_header_product  ('Category', 'category_id')">
+                    </th>
+
+                    <th scope="col" th:replace="fragments/sort_header :: sort_header_product  ('Brand', 'brand_id')">
+                    </th>
 
                     <th scope="col">Actions</th>
                 </tr>
@@ -61,8 +65,9 @@
                     <th scope="row" th:text="${product.id}">1</th>
                     <td th:text="${product.name}">Apple</td>
                     <td th:text="${product.cost}">10</td>
-                    <td th:text="${product.showCategory()}">None</td>
-                    <td sec:authorize="hasRole('SUPER_ADMIN')">
+                    <td th:text="${product.categoryDto.title}">None</td>
+                    <td th:text="${product.brandDto.title}">None</td>
+                    <td sec:authorize="hasRole('SUPER_ADMIN') or hasRole('ADMIN')">
                         <a class="btn btn-success" th:href="@{/products/{id}(id = ${product.id})}"><i
                                 class="fas fa-edit"></i></a>
                         <form class="d-inline" th:method="delete" th:action="@{/products/{id}(id = ${product.id})}">
@@ -82,7 +87,7 @@
 
                     <li th:if="${products.hasPrevious()}" class="page-item">
                         <a class="page-link"
-                           th:replace="fragments/paging :: paging ('Previos', ${products.getNumber()})"></a>
+                           th:replace="fragments/paging :: paging_product ('Previos', ${products.getNumber()})"></a>
                     </li>
                     <li th:unless="${products.hasPrevious()}" class="page-item disabled">
                         <a class="page-link">Previous</a>
@@ -93,13 +98,12 @@
                         class="page-item">
                         <a class="page-link"
                            th:text="${num}"
-                           th:replace="fragments/paging :: paging (${num}, ${num})"></a>
+                           th:replace="fragments/paging :: paging_product (${num}, ${num})"></a>
                     </li>
 
-                    <!-- переход на следующую страницу со всеми параметрами -->
                     <li th:if="${products.hasNext()}" class="page-item">
                         <a class="page-link"
-                           th:replace="fragments/paging :: paging ('Next', ${products.getNumber()+2})"></a>
+                           th:replace="fragments/paging :: paging_product ('Next', ${products.getNumber()+2})"></a>
                     </li>
                     <li th:unless="${products.hasNext()}" class="page-item disabled">
                         <a class="page-link">Next</a>

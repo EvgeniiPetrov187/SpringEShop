@@ -1,15 +1,52 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<th scope="col" th:fragment="sort_header (header, title)">[[${header}]]
+<th scope="col" th:fragment="sort_header_product (header, title)">[[${header}]]
     <a th:href="@{/products(
                         page=${param.page},
-                        size=${products.size},
+                        size=${param.size},
                         sort=${title},
                         direction=${productListParam.getReverse()},
                         titleFilter=${param.titleFilter},
                         minPriceFilter=${param.minPriceFilter},
                         maxPriceFilter=${param.maxPriceFilter})}">
-        <i class="fa" th:classappend="${#strings.equals(#request.getParameter('direction'), 'desc')} ? 'fa-sort-down' : 'fa-sort-up'"></i>
+        <i class="fa"
+           th:classappend="${#strings.equals(#request.getParameter('direction'), 'desc')} ? 'fa-sort-down' : 'fa-sort-up'"></i>
+    </a>
+</th>
+
+<th scope="col" th:fragment="sort_header_user (header, title)">[[${header}]]
+    <a th:href="@{/users(
+                        page=${param.page},
+                        size=${param.size},
+                        sort=${title},
+                        direction=${userListParam.getReverse()},
+                        titleFilter=${param.titleFilter},
+                        minAgeFilter=${param.minAgeFilter},
+                        maxAgeFilter=${param.maxAgeFilter})}">
+        <i class="fa"
+           th:classappend="${#strings.equals(#request.getParameter('direction'), 'desc')} ? 'fa-sort-down' : 'fa-sort-up'"></i>
+    </a>
+</th>
+
+<th scope="col" th:fragment="sort_header_category (header, column)">[[${header}]]
+    <a th:href="@{/categories(
+            page=${param.page},
+            size=${param.size},
+            sort=${column},
+            direction=${categoryListParam.getReverse()})}">
+        <i class="fa"
+           th:classappend="${#strings.equals(#request.getParameter('direction'), 'desc')} ? 'fa-sort-down' : 'fa-sort-up'"></i>
+    </a>
+</th>
+
+<th scope="col" th:fragment="sort_header_brand (header, column)">[[${header}]]
+    <a th:href="@{/brands(
+            page=${param.page},
+            size=${param.size},
+            sort=${column},
+            direction=${brandListParam.getReverse()})}">
+        <i class="fa"
+           th:classappend="${#strings.equals(#request.getParameter('direction'), 'desc')} ? 'fa-sort-down' : 'fa-sort-up'"></i>
     </a>
 </th>
 
