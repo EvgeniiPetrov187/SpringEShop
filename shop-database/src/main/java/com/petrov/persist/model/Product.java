@@ -1,8 +1,6 @@
-package com.petrov.persist;
+package com.petrov.persist.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 
 @Entity
@@ -23,17 +21,22 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "brand_id")
+    private Brand brand;
+
     public Product(Long id, String name, BigDecimal cost) {
         this.id = id;
         this.name = name;
         this.cost = cost;
     }
 
-    public Product(Long id, String name, BigDecimal cost, Category category) {
+    public Product(Long id, String name, BigDecimal cost, Category category, Brand brand) {
         this.id = id;
         this.name = name;
         this.cost = cost;
         this.category = category;
+        this.brand = brand;
     }
 
     public Product() {
@@ -71,9 +74,21 @@ public class Product {
         this.category = category;
     }
 
+    public Brand getBrand() {
+        return brand;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brand = brand;
+    }
+
     public String showCategory() {
         return category.getTitle();
     }
-    //
+
+    public String showBrand() {
+        return brand.getTitle();
+    }
+
 }
 

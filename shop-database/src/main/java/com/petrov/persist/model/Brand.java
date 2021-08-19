@@ -1,29 +1,28 @@
-package com.petrov.persist;
+package com.petrov.persist.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.util.List;
 
-// категория
+
 @Entity
-@Table(name = "categories")
-public class Category {
+@Table(name = "brands")
+public class Brand {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+
     @Column(nullable = false)
     private String title;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
     List<Product> products;
 
-    public Category() {
+    public Brand() {
     }
 
-    public Category(Long id, String title) {
+    public Brand(Long id, String title) {
         this.id = id;
         this.title = title;
     }

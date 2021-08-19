@@ -11,66 +11,66 @@
 <div class="container">
     <div class="row py-2">
         <div sec:authorize="hasRole('SUPER_ADMIN') or hasRole('ADMIN')" class="col-12">
-            <a class="btn btn-primary" th:href="@{/categories/new}">Add Category</a>
+            <a class="btn btn-primary" th:href="@{/brands/new}">Add Brand</a>
         </div>
 
         <div class="col-12">
             <table class="table table-bordered my-2">
                 <thead>
                 <tr>
-                    <th scope="col" th:replace="fragments/sort_header :: sort_header_category  ('Id', 'id')">
+                    <th scope="col" th:replace="fragments/sort_header :: sort_header_brand  ('Id', 'id')">
                     </th>
 
-                    <th scope="col" th:replace="fragments/sort_header :: sort_header_category ('Category', 'title')">
+                    <th scope="col" th:replace="fragments/sort_header :: sort_header_brand  ('Brand', 'title')">
                     </th>
 
                     <th scope="col">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:if="${categories.hasContent()}" th:each="category : ${categories.content}">
-                    <th scope="row" th:text="${category.id}">1</th>
-                    <td th:text="${category.title}">Apple</td>
+                <tr th:each="brand : ${brands}">
+                    <th scope="row" th:text="${brand.id}">1</th>
+                    <td th:text="${brand.title}">X</td>
                     <td sec:authorize="hasRole('SUPER_ADMIN') or hasRole('ADMIN')">
-                        <a class="btn btn-success" th:href="@{/categories/{id}(id = ${category.id})}"><i
+                        <a class="btn btn-success" th:href="@{/brands/{id}(id = ${brand.id})}"><i
                                 class="fas fa-edit"></i></a>
-                        <form class="d-inline" th:method="delete" th:action="@{/categories/{id}(id = ${category.id})}">
+                        <form class="d-inline" th:method="delete" th:action="@{/brands/{id}(id = ${brand.id})}">
                             <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
                         </form>
                     </td>
                 </tr>
-                <tr th:unless="${categories.hasContent()}">
-                    <td colspan="4">No Category</td>
+                <tr th:unless="${brands.hasContent()}">
+                    <td colspan="4">No products</td>
                 </tr>
                 </tbody>
             </table>
         </div>
 
-        <div th:if="${categories.hasContent()}" class="col-12">
+        <div th:if="${brands.hasContent()}" class="col-12">
             <nav aria-label="...">
                 <ul class="pagination">
 
-                    <li th:if="${categories.hasPrevious()}" class="page-item">
+                    <li th:if="${brands.hasPrevious()}" class="page-item">
                         <a class="page-link"
-                           th:replace="fragments/paging :: paging_category ('Previos', ${categories.getNumber()})"></a>
+                           th:replace="fragments/paging :: paging_brand ('Previos', ${brands.getNumber()})"></a>
                     </li>
-                    <li th:unless="${categories.hasPrevious()}" class="page-item disabled">
+                    <li th:unless="${brands.hasPrevious()}" class="page-item disabled">
                         <a class="page-link">Previous</a>
                     </li>
 
-                    <li th:each="num : ${#numbers.sequence(1, categories.totalPages)}"
-                        th:classappend="${num == categories.number +1} ? 'active'"
+                    <li th:each="num : ${#numbers.sequence(1, brands.totalPages)}"
+                        th:classappend="${num == brands.number +1} ? 'active'"
                         class="page-item">
                         <a class="page-link"
                            th:text="${num}"
-                           th:replace="fragments/paging :: paging_category (${num}, ${num})"></a>
+                           th:replace="fragments/paging :: paging_brand (${num}, ${num})"></a>
                     </li>
 
-                    <li th:if="${categories.hasNext()}" class="page-item">
+                    <li th:if="${brands.hasNext()}" class="page-item">
                         <a class="page-link"
-                           th:replace="fragments/paging :: paging_category  ('Next', ${categories.getNumber()+2})"></a>
+                           th:replace="fragments/paging :: paging_brand  ('Next', ${brands.getNumber()+2})"></a>
                     </li>
-                    <li th:unless="${categories.hasNext()}" class="page-item disabled">
+                    <li th:unless="${brands.hasNext()}" class="page-item disabled">
                         <a class="page-link">Next</a>
                     </li>
                 </ul>

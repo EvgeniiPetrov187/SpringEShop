@@ -1,6 +1,10 @@
 package com.petrov.controller;
 
 
+import com.petrov.controller.dto.BrandDto;
+import com.petrov.controller.dto.CategoryDto;
+import com.petrov.controller.dto.ProductDto;
+import com.petrov.persist.BrandRepository;
 import com.petrov.persist.CategoryRepository;
 import com.petrov.service.ProductService;
 import org.slf4j.Logger;
@@ -26,10 +30,13 @@ public class ProductController {
 
     private final CategoryRepository categoryRepository;
 
+    private final BrandRepository brandRepository;
+
     @Autowired
-    public ProductController(ProductService productService, CategoryRepository categoryRepository) {
+    public ProductController(ProductService productService, CategoryRepository categoryRepository, BrandRepository brandRepository) {
         this.productService = productService;
         this.categoryRepository = categoryRepository;
+        this.brandRepository = brandRepository;
     }
 
 
@@ -48,6 +55,9 @@ public class ProductController {
         model.addAttribute("categories", categoryRepository.findAll().stream()
                 .map(category -> new CategoryDto(category.getId(), category.getTitle()))
                 .collect(Collectors.toList()));
+        model.addAttribute("brands", brandRepository.findAll().stream()
+                .map(brand -> new BrandDto(brand.getId(), brand.getTitle()))
+                .collect(Collectors.toList()));
         return "new_product_form";
     }
 
@@ -60,6 +70,9 @@ public class ProductController {
         model.addAttribute("categories", categoryRepository.findAll().stream()
                 .map(category -> new CategoryDto(category.getId(), category.getTitle()))
                 .collect(Collectors.toList()));
+        model.addAttribute("brands", brandRepository.findAll().stream()
+                .map(brand -> new BrandDto(brand.getId(), brand.getTitle()))
+                .collect(Collectors.toList()));
         return "new_product_form";
     }
 
@@ -70,6 +83,9 @@ public class ProductController {
         if (result.hasErrors()) {
             model.addAttribute("categories", categoryRepository.findAll().stream()
                     .map(category -> new CategoryDto(category.getId(), category.getTitle()))
+                    .collect(Collectors.toList()));
+            model.addAttribute("brands", brandRepository.findAll().stream()
+                    .map(brand -> new BrandDto(brand.getId(), brand.getTitle()))
                     .collect(Collectors.toList()));
             return "new_product_form";
         }
@@ -93,6 +109,5 @@ public class ProductController {
         modelAndView.setStatus(HttpStatus.NOT_FOUND);
         return modelAndView;
     }
-//
 }
 

@@ -1,6 +1,6 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<a class="page-link" th:fragment="paging (button, page)"
+<a class="page-link" th:fragment="paging_product (button, page)"
    th:href="@{/products(
                         page=${page},
                         size=${products.size},
@@ -9,6 +9,33 @@
                         titleFilter=${param.titleFilter},
                         minPriceFilter=${param.minPriceFilter},
                         maxPriceFilter=${param.maxPriceFilter})}"
+   tabindex="-1">[[${button}]]</a>
+
+<a class="page-link" th:fragment="paging_user (button, page)"
+   th:href="@{/users(
+                        page=${page},
+                        size=${users.size},
+                        sort=${param.sort},
+                        direction=${param.direction},
+                        titleFilter=${param.titleFilter},
+                        minAgeFilter=${param.minAgeFilter},
+                        maxAgeFilter=${param.maxAgeFilter})}"
+   tabindex="-1">[[${button}]]</a>
+
+<a class="page-link" th:fragment="paging_category (button, page)"
+   th:href="@{/categories(
+                        page=${page},
+                        size=${param.size},
+                        sort=${param.sort},
+                        direction=${param.direction})}"
+   tabindex="-1">[[${button}]]</a>
+
+<a class="page-link" th:fragment="paging_brand (button, page)"
+   th:href="@{/brands(
+                        page=${page},
+                        size=${param.size},
+                        sort=${param.sort},
+                        direction=${param.direction})}"
    tabindex="-1">[[${button}]]</a>
 
 </html>

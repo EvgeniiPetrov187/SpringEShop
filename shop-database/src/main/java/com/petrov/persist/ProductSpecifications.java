@@ -1,5 +1,6 @@
 package com.petrov.persist;
 
+import com.petrov.persist.model.Product;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.math.BigDecimal;
@@ -16,6 +17,5 @@ public final class ProductSpecifications {
     public static Specification<Product> maxPrice(BigDecimal maxPrice){
         return (root, query, builder) -> builder.le(root.get("cost"), maxPrice);
     }
-    //
 }
 
