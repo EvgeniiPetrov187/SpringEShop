@@ -1,6 +1,6 @@
 package com.petrov.service;
 
-import com.petrov.controller.UserDto;
+import com.petrov.controller.dto.UserDto;
 import com.petrov.controller.UserListParam;
 import org.springframework.data.domain.Page;
 

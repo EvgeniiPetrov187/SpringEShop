@@ -1,11 +1,11 @@
 package com.petrov.service;
 
-import com.petrov.controller.RoleDto;
-import com.petrov.controller.UserDto;
+import com.petrov.controller.dto.RoleDto;
+import com.petrov.controller.dto.UserDto;
 import com.petrov.controller.UserListParam;
 
 import com.petrov.persist.RoleRepository;
-import com.petrov.persist.User;
+import com.petrov.persist.model.User;
 import com.petrov.persist.UserRepository;
 import com.petrov.persist.UserSpecifications;
 import org.springframework.beans.factory.annotation.Autowired;

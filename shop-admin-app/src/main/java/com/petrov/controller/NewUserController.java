@@ -1,5 +1,7 @@
 package com.petrov.controller;
 
+import com.petrov.controller.dto.RoleDto;
+import com.petrov.controller.dto.UserDto;
 import com.petrov.persist.RoleRepository;
 
 import com.petrov.service.UserService;

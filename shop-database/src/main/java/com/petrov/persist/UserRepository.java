@@ -1,5 +1,6 @@
 package com.petrov.persist;
 
+import com.petrov.persist.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
