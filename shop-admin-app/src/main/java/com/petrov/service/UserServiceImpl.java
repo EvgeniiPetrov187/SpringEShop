@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
             return userRepository.findAll(spec,
                             PageRequest.of(
                                     Optional.ofNullable(userListParam.getPage()).orElse(1) - 1,
-                                    Optional.ofNullable(userListParam.getSize()).orElse(3),
+                                    Optional.ofNullable(userListParam.getSize()).orElse(7),
                                     Optional.of(Optional.ofNullable(userListParam.getDirection()).orElse("asc").equalsIgnoreCase("desc") ?
                                             Sort.by(userListParam.getSort()).descending() :
                                             Sort.by(userListParam.getSort()).ascending()).get()))
@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
             return userRepository.findAll(spec,
                             PageRequest.of(
                                     Optional.ofNullable(userListParam.getPage()).orElse(1) - 1,
-                                    Optional.ofNullable(userListParam.getSize()).orElse(3)))
+                                    Optional.ofNullable(userListParam.getSize()).orElse(7)))
                     .map(user -> new UserDto(user.getId(), user.getUsername(), user.getAge()));
         }
     }

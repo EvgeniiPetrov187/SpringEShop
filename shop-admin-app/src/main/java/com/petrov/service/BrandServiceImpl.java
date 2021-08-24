@@ -29,7 +29,7 @@ public class BrandServiceImpl implements BrandService {
             return brandRepository.findAll(spec,
                             PageRequest.of(
                                     Optional.ofNullable(brandListParam.getPage()).orElse(1) - 1,
-                                    Optional.ofNullable(brandListParam.getSize()).orElse(3),
+                                    Optional.ofNullable(brandListParam.getSize()).orElse(7),
                                     Optional.of(Optional.ofNullable(brandListParam.getDirection()).orElse("asc").equalsIgnoreCase("desc") ?
                                             Sort.by(brandListParam.getSort()).descending() :
                                             Sort.by(brandListParam.getSort()).ascending()).get()))
@@ -38,7 +38,7 @@ public class BrandServiceImpl implements BrandService {
             return brandRepository.findAll(spec,
                             PageRequest.of(
                                     Optional.ofNullable(brandListParam.getPage()).orElse(1) - 1,
-                                    Optional.ofNullable(brandListParam.getSize()).orElse(3)))
+                                    Optional.ofNullable(brandListParam.getSize()).orElse(7)))
                     .map(brand -> new BrandDto(brand.getId(), brand.getTitle()));
         }
     }

@@ -6,6 +6,8 @@ import com.petrov.controller.dto.CategoryDto;
 import com.petrov.controller.dto.ProductDto;
 import com.petrov.persist.BrandRepository;
 import com.petrov.persist.CategoryRepository;
+import com.petrov.service.BrandService;
+import com.petrov.service.CategoryService;
 import com.petrov.service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,23 +30,22 @@ public class ProductController {
 
     private final ProductService productService;
 
-    private final CategoryRepository categoryRepository;
+    private final CategoryService categoryService;
 
-    private final BrandRepository brandRepository;
+    private final BrandService brandService;
 
     @Autowired
-    public ProductController(ProductService productService, CategoryRepository categoryRepository, BrandRepository brandRepository) {
+    public ProductController(ProductService productService, CategoryService categoryService, BrandService brandService) {
         this.productService = productService;
-        this.categoryRepository = categoryRepository;
-        this.brandRepository = brandRepository;
+        this.categoryService = categoryService;
+        this.brandService = brandService;
     }
-
 
     @GetMapping
     public String listPage(Model model,
                            ProductListParam productListParam) {
         logger.info("Product list page requested");
-        model.addAttribute("products", productService.findWithFilter(productListParam));
+        model.addAttribute("products", productService.findAll(productListParam));
         return "products";
     }
 
@@ -52,12 +53,8 @@ public class ProductController {
     public String newProductForm(Model model) {
         logger.info("New product page requested");
         model.addAttribute("productDto", new ProductDto());
-        model.addAttribute("categories", categoryRepository.findAll().stream()
-                .map(category -> new CategoryDto(category.getId(), category.getTitle()))
-                .collect(Collectors.toList()));
-        model.addAttribute("brands", brandRepository.findAll().stream()
-                .map(brand -> new BrandDto(brand.getId(), brand.getTitle()))
-                .collect(Collectors.toList()));
+        model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("brands", brandService.findAll());
         return "new_product_form";
     }
 
@@ -67,12 +64,8 @@ public class ProductController {
 
         model.addAttribute("productDto", productService.findById(id)
                 .orElseThrow(() -> new NotFoundException("User not found")));
-        model.addAttribute("categories", categoryRepository.findAll().stream()
-                .map(category -> new CategoryDto(category.getId(), category.getTitle()))
-                .collect(Collectors.toList()));
-        model.addAttribute("brands", brandRepository.findAll().stream()
-                .map(brand -> new BrandDto(brand.getId(), brand.getTitle()))
-                .collect(Collectors.toList()));
+        model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("brands", brandService.findAll());
         return "new_product_form";
     }
 
@@ -81,12 +74,8 @@ public class ProductController {
         logger.info("Saving product");
 
         if (result.hasErrors()) {
-            model.addAttribute("categories", categoryRepository.findAll().stream()
-                    .map(category -> new CategoryDto(category.getId(), category.getTitle()))
-                    .collect(Collectors.toList()));
-            model.addAttribute("brands", brandRepository.findAll().stream()
-                    .map(brand -> new BrandDto(brand.getId(), brand.getTitle()))
-                    .collect(Collectors.toList()));
+            model.addAttribute("categories", categoryService.findAll());
+            model.addAttribute("brands", brandService.findAll());
             return "new_product_form";
         }
 
