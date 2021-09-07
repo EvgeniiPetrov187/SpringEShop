@@ -17,5 +17,9 @@ public final class ProductSpecifications {
     public static Specification<Product> maxPrice(BigDecimal maxPrice){
         return (root, query, builder) -> builder.le(root.get("cost"), maxPrice);
     }
+
+    public static Specification<Product> byCategory(long categoryId) {
+        return (root, query, builder) -> builder.equal(root.get("category").get("id"), categoryId);
+    }
 }
 

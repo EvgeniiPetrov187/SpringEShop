@@ -5,6 +5,15 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+@NamedEntityGraph(
+        name = "product-category-brand",
+        attributeNodes = {
+                @NamedAttributeNode("category"),
+                @NamedAttributeNode("brand"),
+                @NamedAttributeNode("pictures")
+        }
+)
+
 @Entity
 @Table(name = "products")
 public class Product {
@@ -18,6 +27,9 @@ public class Product {
 
     @Column(nullable = false)
     private BigDecimal cost;
+
+    @Column
+    private String description;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "category_id")
@@ -36,10 +48,11 @@ public class Product {
         this.cost = cost;
     }
 
-    public Product(Long id, String name, BigDecimal cost, Category category, Brand brand) {
+    public Product(Long id, String name, BigDecimal cost, String description, Category category, Brand brand) {
         this.id = id;
         this.name = name;
         this.cost = cost;
+        this.description = description;
         this.category = category;
         this.brand = brand;
     }
@@ -69,6 +82,14 @@ public class Product {
 
     public void setCost(BigDecimal cost) {
         this.cost = cost;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Category getCategory() {

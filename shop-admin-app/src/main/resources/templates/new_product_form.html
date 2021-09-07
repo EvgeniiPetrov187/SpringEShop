@@ -46,28 +46,24 @@
                                 th:selected="${productDto.brandDto?.id == brand.id}"></option>
                     </select>
                 </div>
-
                 <div class="form-group">
                     <label for="newPictures">Product image</label>
                     <input th:field="*{newPictures}" type="file" multiple class="form-control" id="newPictures"
                            placeholder="Load new picture">
                 </div>
-
-                <div class="form-group">
-                    <!-- отображение картинки-->
-                    <img th:each="picture : ${productDto.pictures}"
-                         th:src="@{/picture/{id}(id=${picture})} " height="100px" alt="Image"/>
-                </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
-            <!--  удаление картинки          -->
-            <div class="form-group">
-                <form class="d-inline"
-                      th:each="picture,state : ${productDto.pictures}"
-                      th:method="delete"
-                      th:action="@{/picture/{id}(id = ${picture})}">
-                    <button type="submit">Delete Image [[${state.count}]]</button>
-                </form>
+            <div class="container-fluid mt-4">
+                <div class="card-columns" style="column-count: 6">
+                    <div class="card" th:each="picture : ${productDto.pictures}">
+                        <img th:src="@{/picture/{id}(id=${picture})} " height="100px" alt="Image"/>
+                        <form class="card-header"
+                              th:method="delete"
+                              th:action="@{/picture/{id}(id = ${picture})}">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

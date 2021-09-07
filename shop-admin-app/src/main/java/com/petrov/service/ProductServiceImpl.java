@@ -59,6 +59,10 @@ public class ProductServiceImpl implements ProductService {
             spec = spec.and(ProductSpecifications.maxPrice(productListParam.getMaxPriceFilter()));
         }
 
+        if (productListParam.getCategoryId() != null) {
+            spec = spec.and(ProductSpecifications.byCategory(productListParam.getCategoryId()));
+        }
+
         if (productListParam.getSort() != null && !productListParam.getSort().isEmpty()) {
             return productRepository.findAll(spec,
                             PageRequest.of(
@@ -113,6 +117,7 @@ public class ProductServiceImpl implements ProductService {
 
         product.setName(productDto.getName());
         product.setCost(productDto.getCost());
+        product.setDescription(productDto.getDescription());
         product.setCategory(category);
         product.setBrand(brand);
 
