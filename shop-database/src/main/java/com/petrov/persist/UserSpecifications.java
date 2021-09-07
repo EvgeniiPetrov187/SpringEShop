@@ -1,5 +1,6 @@
 package com.petrov.persist;
 
+import com.petrov.persist.model.User;
 import org.springframework.data.jpa.domain.Specification;
 
 

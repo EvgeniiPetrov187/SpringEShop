@@ -10,20 +10,23 @@
 <div class="container">
     <div class="row py-2">
         <div class="col-12">
-            <form th:action="@{/products}" method="post" th:object="${productDto}">
+            <form th:action="@{/products}" method="post" th:object="${productDto}" enctype="multipart/form-data">
                 <input type="hidden" id="id" th:field="*{id}">
+
                 <div class="form-group">
                     <label>Product name</label>
                     <input type="text" class="form-control" id="name" th:field="*{name}"
                            placeholder="Enter product name">
                     <p class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
                 </div>
+
                 <div class="form-group">
                     <label>Product cost</label>
                     <input type="number" class="form-control" id="cost" th:field="*{cost}"
                            placeholder="Enter product cost">
                     <p class="text-danger" th:if="${#fields.hasErrors('cost')}" th:errors="*{cost}"></p>
                 </div>
+
                 <div class="form-group">
                     <label for="category">Product category</label>
                     <select multiple class="form-control" id="category" th:field="*{categoryDto}" required>
@@ -33,18 +36,39 @@
                                 th:selected="${productDto.categoryDto?.id == category.id}"></option>
                     </select>
                 </div>
-                <!-- добавление брэнда к продукту -->
+
                 <div class="form-group">
                     <label for="brand">Product brand</label>
-                    <select multiple class="form-control" id="brand" th:field="*{BrandDto}" required>
+                    <select multiple class="form-control" id="brand" th:field="*{brandDto}" required>
                         <option th:each="brand : ${brands}"
                                 th:text="${brand.title}"
                                 th:value="${brand.id}"
                                 th:selected="${productDto.brandDto?.id == brand.id}"></option>
                     </select>
                 </div>
+
+                <div class="form-group">
+                    <label for="newPictures">Product image</label>
+                    <input th:field="*{newPictures}" type="file" multiple class="form-control" id="newPictures"
+                           placeholder="Load new picture">
+                </div>
+
+                <div class="form-group">
+                    <!-- отображение картинки-->
+                    <img th:each="picture : ${productDto.pictures}"
+                         th:src="@{/picture/{id}(id=${picture})} " height="100px" alt="Image"/>
+                </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
+            <!--  удаление картинки          -->
+            <div class="form-group">
+                <form class="d-inline"
+                      th:each="picture,state : ${productDto.pictures}"
+                      th:method="delete"
+                      th:action="@{/picture/{id}(id = ${picture})}">
+                    <button type="submit">Delete Image [[${state.count}]]</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>

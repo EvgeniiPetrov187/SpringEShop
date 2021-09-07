@@ -1,4 +1,4 @@
-package com.petrov.controller;
+package com.petrov.controller.dto;
 
 import java.util.Objects;
 

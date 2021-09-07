@@ -1,5 +1,7 @@
 package com.petrov.controller;
 
+import com.petrov.controller.dto.RoleDto;
+import com.petrov.controller.dto.UserDto;
 import com.petrov.persist.RoleRepository;
 import com.petrov.service.UserService;
 import org.slf4j.Logger;
@@ -13,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Controller

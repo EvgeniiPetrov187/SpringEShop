@@ -1,5 +1,6 @@
 package com.petrov.controller;
 
+import com.petrov.controller.dto.RoleDto;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 

@@ -51,10 +51,13 @@
                     <th scope="col" th:replace="fragments/sort_header :: sort_header_product ('Price', 'cost')">
                     </th>
 
-                    <th scope="col" th:replace="fragments/sort_header :: sort_header_product  ('Category', 'category_id')">
+                    <th scope="col">Image</th>
+
+                    <th scope="col"
+                        th:replace="fragments/sort_header :: sort_header_product  ('Category', 'category.title')">
                     </th>
 
-                    <th scope="col" th:replace="fragments/sort_header :: sort_header_product  ('Brand', 'brand_id')">
+                    <th scope="col" th:replace="fragments/sort_header :: sort_header_product  ('Brand', 'brand.title')">
                     </th>
 
                     <th scope="col">Actions</th>
@@ -65,13 +68,17 @@
                     <th scope="row" th:text="${product.id}">1</th>
                     <td th:text="${product.name}">Apple</td>
                     <td th:text="${product.cost}">10</td>
+                    <td>
+                        <!--  отображение первой картинки продукта    -->
+                        <img th:src="@{/picture/{id} (id=${product.pictures.get(0)})}" height="50px" alt="Image">
+                    </td>
                     <td th:text="${product.categoryDto.title}">None</td>
                     <td th:text="${product.brandDto.title}">None</td>
                     <td sec:authorize="hasRole('SUPER_ADMIN') or hasRole('ADMIN')">
                         <a class="btn btn-success" th:href="@{/products/{id}(id = ${product.id})}"><i
                                 class="fas fa-edit"></i></a>
                         <form class="d-inline" th:method="delete" th:action="@{/products/{id}(id = ${product.id})}">
-                            <button type="submit" a class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                            <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
                         </form>
                     </td>
                 </tr>

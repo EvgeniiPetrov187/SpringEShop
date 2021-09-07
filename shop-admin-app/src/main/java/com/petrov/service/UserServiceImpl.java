@@ -1,11 +1,11 @@
 package com.petrov.service;
 
-import com.petrov.controller.RoleDto;
-import com.petrov.controller.UserDto;
+import com.petrov.controller.dto.RoleDto;
+import com.petrov.controller.dto.UserDto;
 import com.petrov.controller.UserListParam;
 
 import com.petrov.persist.RoleRepository;
-import com.petrov.persist.User;
+import com.petrov.persist.model.User;
 import com.petrov.persist.UserRepository;
 import com.petrov.persist.UserSpecifications;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
             return userRepository.findAll(spec,
                             PageRequest.of(
                                     Optional.ofNullable(userListParam.getPage()).orElse(1) - 1,
-                                    Optional.ofNullable(userListParam.getSize()).orElse(3),
+                                    Optional.ofNullable(userListParam.getSize()).orElse(7),
                                     Optional.of(Optional.ofNullable(userListParam.getDirection()).orElse("asc").equalsIgnoreCase("desc") ?
                                             Sort.by(userListParam.getSort()).descending() :
                                             Sort.by(userListParam.getSort()).ascending()).get()))
@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
             return userRepository.findAll(spec,
                             PageRequest.of(
                                     Optional.ofNullable(userListParam.getPage()).orElse(1) - 1,
-                                    Optional.ofNullable(userListParam.getSize()).orElse(3)))
+                                    Optional.ofNullable(userListParam.getSize()).orElse(7)))
                     .map(user -> new UserDto(user.getId(), user.getUsername(), user.getAge()));
         }
     }

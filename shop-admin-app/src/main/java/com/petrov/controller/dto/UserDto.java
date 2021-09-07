@@ -1,41 +1,43 @@
-package com.petrov.persist;
+package com.petrov.controller.dto;
 
-import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
-@Entity
-@Table(name = "users")
-public class User {
+public class UserDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @NotBlank
     private String username;
 
-    @Column(nullable = false)
+    @Max(value = 100)
+    @Min(value = 18)
     private Integer age;
 
-    @Column(nullable = false)
+    @NotBlank
     private String password;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+    @NotBlank
+    private String passwordRpt;
 
-    public User() {
-    }
+    private Set<RoleDto> roles;
 
-    public User(Long id, String username, Integer age, String password, Set<Role> roles) {
+    public UserDto(Long id, String username, Integer age) {
         this.id = id;
         this.username = username;
         this.age = age;
-        this.password = password;
+    }
+
+    public UserDto(Long id, String username, Integer age, Set<RoleDto> roles) {
+        this.id = id;
+        this.username = username;
+        this.age = age;
         this.roles = roles;
     }
+
+    public UserDto(){}
 
     public Long getId() {
         return id;
@@ -69,13 +71,20 @@ public class User {
         this.password = password;
     }
 
-    public Set<Role> getRoles() {
+    public String getPasswordRpt() {
+        return passwordRpt;
+    }
+
+    public void setPasswordRpt(String passwordRpt) {
+        this.passwordRpt = passwordRpt;
+    }
+
+    public Set<RoleDto> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(Set<RoleDto> roles) {
         this.roles = roles;
     }
 }
-
 

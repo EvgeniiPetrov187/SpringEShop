@@ -35,7 +35,7 @@ public class CategoryServiceImpl implements CategoryService {
             return categoryRepository.findAll(spec,
                             PageRequest.of(
                                     Optional.ofNullable(categoryListParam.getPage()).orElse(1) - 1,
-                                    Optional.ofNullable(categoryListParam.getSize()).orElse(3),
+                                    Optional.ofNullable(categoryListParam.getSize()).orElse(7),
                                     Optional.of(Optional.ofNullable(categoryListParam.getDirection()).orElse("asc").equalsIgnoreCase("desc") ?
                                             Sort.by(categoryListParam.getSort()).descending() :
                                             Sort.by(categoryListParam.getSort()).ascending()).get()))
@@ -44,7 +44,7 @@ public class CategoryServiceImpl implements CategoryService {
             return categoryRepository.findAll(spec,
                             PageRequest.of(
                                     Optional.ofNullable(categoryListParam.getPage()).orElse(1) - 1,
-                                    Optional.ofNullable(categoryListParam.getSize()).orElse(3)))
+                                    Optional.ofNullable(categoryListParam.getSize()).orElse(7)))
                     .map(category -> new CategoryDto(category.getId(), category.getTitle()));
         }
     }

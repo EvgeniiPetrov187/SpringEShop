@@ -1,4 +1,4 @@
-package com.petrov.persist;
+package com.petrov.persist.model;
 
 import javax.persistence.*;
 import java.util.List;
