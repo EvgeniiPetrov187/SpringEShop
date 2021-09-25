@@ -2,6 +2,7 @@ package com.petrov.controller.dto;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 
 public class ProductDto {
 
@@ -9,27 +10,33 @@ public class ProductDto {
 
     private String name;
 
-    private BigDecimal cost;
-
     private String description;
 
-    private CategoryDto categoryDto;
+    private BigDecimal cost;
 
-    private BrandDto brandDto;
+    private CategoryDto category;
+
+    private BrandDto brand;
 
     private List<Long> pictures;
 
-    public ProductDto(Long id, String name, BigDecimal cost, String description, CategoryDto categoryDto, BrandDto brandDto, List<Long> pictures) {
-        this.id = id;
-        this.name = name;
-        this.cost = cost;
-        this.description = description;
-        this.categoryDto = categoryDto;
-        this.brandDto = brandDto;
-        this.pictures = pictures;
-    }
+    private Long mainPictureId;
 
     public ProductDto() {
+    }
+
+    public ProductDto(Long id, String name, BigDecimal price, String description,
+                      CategoryDto category, BrandDto brand, List<Long> pictures) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.cost = price;
+        this.category = category;
+        this.brand = brand;
+        this.pictures = pictures;
+        if (pictures != null && !pictures.isEmpty()) {
+            this.mainPictureId = pictures.get(0);
+        }
     }
 
     public Long getId() {
@@ -48,14 +55,6 @@ public class ProductDto {
         this.name = name;
     }
 
-    public BigDecimal getCost() {
-        return cost;
-    }
-
-    public void setCost(BigDecimal cost) {
-        this.cost = cost;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -64,20 +63,28 @@ public class ProductDto {
         this.description = description;
     }
 
-    public CategoryDto getCategoryDto() {
-        return categoryDto;
+    public BigDecimal getCost() {
+        return cost;
     }
 
-    public void setCategoryDto(CategoryDto categoryDto) {
-        this.categoryDto = categoryDto;
+    public void setCost(BigDecimal cost) {
+        this.cost = cost;
     }
 
-    public BrandDto getBrandDto() {
-        return brandDto;
+    public CategoryDto getCategory() {
+        return category;
     }
 
-    public void setBrandDto(BrandDto brandDto) {
-        this.brandDto = brandDto;
+    public void setCategory(CategoryDto category) {
+        this.category = category;
+    }
+
+    public BrandDto getBrand() {
+        return brand;
+    }
+
+    public void setBrand(BrandDto brand) {
+        this.brand = brand;
     }
 
     public List<Long> getPictures() {
@@ -87,7 +94,27 @@ public class ProductDto {
     public void setPictures(List<Long> pictures) {
         this.pictures = pictures;
     }
-}
 
+    public Long getMainPictureId() {
+        return mainPictureId;
+    }
+
+    public void setMainPictureId(Long mainPictureId) {
+        this.mainPictureId = mainPictureId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ProductDto)) return false;
+        ProductDto that = (ProductDto) o;
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getName(), that.getName()) && Objects.equals(getDescription(), that.getDescription()) && Objects.equals(getCost(), that.getCost()) && Objects.equals(getCategory(), that.getCategory()) && Objects.equals(getBrand(), that.getBrand());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getDescription(), getCost(), getCategory(), getBrand());
+    }
+}
 
 

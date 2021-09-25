@@ -13,6 +13,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -26,8 +29,12 @@ public class ProductServiceImpl implements ProductService {
         this.productRepository = productRepository;
     }
 
+
     @Override
-    public Page<ProductDto> findAll(Optional<Long> categoryId, Optional<String> namePattern,
+    public Page<ProductDto> findAll(Optional<Long> categoryId,
+                                    Optional<String> namePattern,
+                                    Optional<BigDecimal> minPrice,
+                                    Optional<BigDecimal> maxPrice,
                                     Integer page, Integer size, String sortField) {
         Specification<Product> spec = Specification.where(null);
         if (categoryId.isPresent() && categoryId.get() != -1) {
@@ -36,6 +43,14 @@ public class ProductServiceImpl implements ProductService {
         if (namePattern.isPresent()) {
             spec = spec.and(ProductSpecifications.productPrefix(namePattern.get()));
         }
+        //добавлена фильтрация по цене
+        if (minPrice.isPresent()) {
+            spec = spec.and(ProductSpecifications.minPrice(minPrice.get()));
+        }
+        if (maxPrice.isPresent()) {
+            spec = spec.and(ProductSpecifications.maxPrice(maxPrice.get()));
+        }
+
         return productRepository.findAll(spec, PageRequest.of(page, size, Sort.by(sortField)))
                 .map(product -> new ProductDto(product.getId(),
                         product.getName(),
@@ -60,6 +75,11 @@ public class ProductServiceImpl implements ProductService {
                         product.getPictures().stream()
                                 .map(Picture::getId)
                                 .collect(Collectors.toList())));
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        productRepository.deleteById(id);
     }
 }
 
