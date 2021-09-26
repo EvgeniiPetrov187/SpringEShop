@@ -1,4 +1,4 @@
-package com.petrov.shopbackendapiapp;
+package com.petrov;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

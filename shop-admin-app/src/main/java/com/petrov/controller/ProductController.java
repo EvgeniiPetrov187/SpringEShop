@@ -46,6 +46,7 @@ public class ProductController {
                            ProductListParam productListParam) {
         logger.info("Product list page requested");
         model.addAttribute("products", productService.findAll(productListParam));
+        model.addAttribute("categories", categoryService.findAll());
         return "products";
     }
 

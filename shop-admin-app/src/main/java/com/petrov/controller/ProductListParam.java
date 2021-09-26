@@ -15,6 +15,7 @@ public class ProductListParam {
     private String sort;
     private String direction;
     private String reverse;
+    private Long categoryId;
 
 
     public String getTitleFilter() {
@@ -73,6 +74,13 @@ public class ProductListParam {
         this.direction = direction;
     }
 
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
+    }
 
     public String getReverse() {
         try {

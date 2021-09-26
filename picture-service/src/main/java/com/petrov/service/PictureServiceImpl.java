@@ -7,7 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
@@ -63,7 +65,16 @@ public class PictureServiceImpl implements PictureService {
     }
 
     @Override
+    @Transactional
     public void deleteById(Long id) {
+        try {
+            Files.delete(pictureRepository.findById(id)
+                    .map(picture -> Paths.get(storagePath, picture.getStorageNumber()))
+                    .orElseThrow(() -> new IOException("Can't find image")));
+        } catch (IOException e) {
+            logger.error("Can't delete file", e);
+            throw new RuntimeException(e);
+        }
         pictureRepository.deleteById(id);
     }
 
@@ -72,7 +83,7 @@ public class PictureServiceImpl implements PictureService {
         return pictureRepository.findById(id);
     }
 
-    @Override // метод для нахождения ID продукта по картинке
+    @Override
     public Long findProductId(Long picture){
         return pictureRepository.getById(picture).getProduct().getId();
     }
