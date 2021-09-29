@@ -9,6 +9,7 @@ import {CART_URL, CartPageComponent} from "./pages/cart-page/cart-page.component
 import {LOGIN_URL, LoginPageComponent} from "./pages/login-page/login-page.component";
 import {REGISTER_URL, RegisterPageComponent} from "./pages/register-page/register-page.component";
 import {OrderPageComponent, ORDERS_URL} from "./pages/order-page/order-page.component";
+import {AuthGuard} from "./helpers/auth-guard";
 
 const routes: Routes = [
   {path: "", pathMatch: "full", redirectTo: PRODUCT_GALLERY_URL},
@@ -17,7 +18,7 @@ const routes: Routes = [
   {path: CART_URL, component: CartPageComponent},
   {path: LOGIN_URL, component: LoginPageComponent},
   {path: REGISTER_URL, component: RegisterPageComponent},
-  {path: ORDERS_URL, component: OrderPageComponent},
+  {path: ORDERS_URL, component: OrderPageComponent, canActivate: [AuthGuard]},
 ];
 
 @NgModule({

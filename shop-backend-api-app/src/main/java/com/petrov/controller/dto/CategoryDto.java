@@ -1,11 +1,13 @@
 package com.petrov.controller.dto;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.petrov.persist.model.Category;
 import com.petrov.persist.model.Product;
 
 import java.util.List;
 import java.util.Objects;
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 public class CategoryDto {
 
     private Long id;

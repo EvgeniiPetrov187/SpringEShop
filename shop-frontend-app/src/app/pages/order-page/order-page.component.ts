@@ -25,5 +25,4 @@ export class OrderPageComponent implements OnInit {
           console.log(error);
         })
   }
-
 }

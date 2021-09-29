@@ -24,9 +24,13 @@ export class LoginPageComponent implements OnInit {
 
   login() {
     this.auth.authenticate(this.credentials)
-      .subscribe(cred => {
+      .subscribe(authResult => {
         this.isError = false;
-        this.router.navigateByUrl('/' + PRODUCT_GALLERY_URL);
+        if (authResult.redirectUrl) {
+          this.router.navigateByUrl(authResult.redirectUrl);
+        } else {
+          this.router.navigateByUrl('/' + PRODUCT_GALLERY_URL);
+        }
       }, error => {
         this.isError = true;
         console.log(`Authentication error ${error}`);

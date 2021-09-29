@@ -13,6 +13,7 @@ export class UnauthorizedInterceptor implements HttpInterceptor {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    console.log('Intercepted unauthorized error');
     if (request.url === '/api/v1/login' || request.url === '/api/v1/logout') {
       return next.handle(request);
     }

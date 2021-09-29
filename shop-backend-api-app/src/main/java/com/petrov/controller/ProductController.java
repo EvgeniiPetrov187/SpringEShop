@@ -1,7 +1,7 @@
 package com.petrov.controller;
 
 import com.petrov.controller.dto.ProductDto;
-import com.petrov.controller.service.ProductService;
+import com.petrov.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;

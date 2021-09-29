@@ -1,4 +1,4 @@
-package com.petrov.controller.service;
+package com.petrov.service;
 
 
 import com.petrov.controller.dto.ProductDto;

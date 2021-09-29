@@ -13,18 +13,23 @@
       </thead>
       <tbody>
 
-      <tr *ngFor="let lineItem of content?.lineItems">
-        <th scope="row">{{lineItem.productId}}</th>
-        <td>{{lineItem.productDto.name}}</td>
-        <td>
-          <input type="number" [placeholder]="lineItem.qty" [(ngModel)]="qty" class="form-control w-25"/>
-        </td>
-        <td>{{lineItem.itemTotal}}</td>
-        <td>
-          <a class="btn btn-success me-2" (click)="deleteQty(lineItem.productDto.id, qty)"><i class="fas fa-check-circle"></i></a>
-          <a class="btn btn-danger" (click)="delete(lineItem.productDto.id)"><i class="far fa-trash-alt"></i></a>
-        </td>
-      </tr>
+            <tr *ngFor="let lineItem of content?.lineItems">
+              <th scope="row">{{lineItem.productId}}</th>
+              <td>{{lineItem.productDto.name}}</td>
+              <td>
+                <input type="number" [placeholder]="lineItem.qty" [(ngModel)]="qty" class="form-control w-25"/>
+              </td>
+              <td>{{lineItem.itemTotal}}</td>
+              <td>
+                <a class="btn btn-success me-2" (click)="deleteQty(lineItem.productDto.id, qty)"><i class="fas fa-check-circle"></i></a>
+                <a class="btn btn-danger" (click)="delete(lineItem.productDto.id)"><i class="far fa-trash-alt"></i></a>
+              </td>
+            </tr>
+<!--      <tr app-cart-item-->
+<!--          *ngFor="let lineItem of content?.lineItems"-->
+<!--          [lineItem]="lineItem"-->
+<!--          (updated)="cartUpdated()">-->
+<!--      </tr>-->
 
       </tbody>
     </table>
@@ -36,7 +41,7 @@
       <div class="card-body">
         <h2>Order summary</h2>
         <p>Subtotal: {{content?.subtotal}}</p>
-        <button class="btn btn-primary me-2">Create Order</button>
+        <button class="btn btn-primary me-2" (click)="saveOrder()" >Create Order</button>
       </div>
     </div>
   </div>
