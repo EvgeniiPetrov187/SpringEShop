@@ -40,9 +40,11 @@ public class CartServiceImpl implements CartService {
 
     // поиск продукта в корзине
     @Override
-    public LineItem findByProduct(ProductDto productDto) {
+    public LineItem findByProduct(LineItem lineItem) {
         for (LineItem item : getLineItems()) {
-            if (item.getProductDto().hashCode() == (productDto.hashCode())) {
+            if (item.getProductDto().getName().equals(lineItem.getProductDto().getName()) &&
+                    item.getColor().equals(lineItem.getColor()) &&
+                    item.getMaterial().equals(lineItem.getMaterial())) {
                 return item;
             }
         }
@@ -52,15 +54,17 @@ public class CartServiceImpl implements CartService {
     // изменение количества продуктов одного типа
     @Override
     public void removeProductQty(ProductDto productDto, String color, String material, int qty) {
-        LineItem lineItem = findByProduct(productDto);
-        lineItems.put(lineItem, qty);
+        LineItem lineItem = new LineItem(productDto, color, material);
+        LineItem newLineItem = findByProduct(lineItem);
+        lineItems.put(newLineItem, qty);
     }
 
     // удаление продукта из корзины
     @Override
     public void removeProduct(ProductDto productDto, String color, String material) {
-        LineItem lineItem = findByProduct(productDto);
-        lineItems.remove(lineItem);
+        LineItem lineItem = new LineItem(productDto, color, material);
+        LineItem aLineItem = findByProduct(lineItem);
+        lineItems.remove(aLineItem);
     }
 
     @Override

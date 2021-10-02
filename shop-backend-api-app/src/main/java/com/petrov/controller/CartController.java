@@ -45,23 +45,14 @@ public class CartController {
     }
 
 
-    @DeleteMapping("/{id}" )
-    public void deleteProduct(@PathVariable Long id){
-        ProductDto product = productService.findById(id).get();
-        cartService.removeProduct(product,
-                cartService.findByProduct(product).getColor(),
-                cartService.findByProduct(product).getMaterial());
+    @DeleteMapping(consumes = "application/json")
+    public void deleteLineItem(@RequestBody LineItem lineItem) {
+        cartService.removeProduct(lineItem.getProductDto(), lineItem.getColor(), lineItem.getMaterial());
     }
 
-    @PostMapping(path = "/{id}", produces = "application/json", consumes = "application/json")
-    public void deleteProductQty(@PathVariable Long id, @RequestBody Integer qty){
-        ProductDto product = productService.findById(id).get();
-        LineItem lineItem = cartService.findByProduct(product);
-        cartService.removeProductQty(
-                lineItem.getProductDto(),
-                lineItem.getColor(),
-                lineItem.getMaterial(),
-                qty);
+    @PostMapping(path = "/{qty}",produces = "application/json", consumes = "application/json")
+    public void deleteLineItemQty(@RequestBody LineItem lineItem, @PathVariable Integer qty) {
+        cartService.removeProductQty(lineItem.getProductDto(), lineItem.getColor(), lineItem.getMaterial(), qty);
     }
 
     @DeleteMapping("/clear_cart")

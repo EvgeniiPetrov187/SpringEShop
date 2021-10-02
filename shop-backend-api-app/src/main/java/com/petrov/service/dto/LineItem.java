@@ -1,13 +1,17 @@
 package com.petrov.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.petrov.controller.dto.ProductDto;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+//@JsonPropertyOrder({"productId","productDto","qty","color","material"})
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class LineItem implements Serializable {
@@ -27,14 +31,6 @@ public class LineItem implements Serializable {
         this.productDto = productDto;
         this.color = color;
         this.material = material;
-    }
-
-    public LineItem(ProductDto productDto, String color, String material, Integer qty) {
-        this.productId = productDto.getId();
-        this.productDto = productDto;
-        this.color = color;
-        this.material = material;
-        this.qty = qty;
     }
 
     public LineItem() {
@@ -82,6 +78,14 @@ public class LineItem implements Serializable {
 
     public BigDecimal getItemTotal() {
         return productDto.getCost().multiply(new BigDecimal(qty));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof LineItem)) return false;
+        LineItem lineItem = (LineItem) o;
+        return Objects.equals(getProductDto(), lineItem.getProductDto()) && Objects.equals(getColor(), lineItem.getColor()) && Objects.equals(getMaterial(), lineItem.getMaterial());
     }
 
     @Override

@@ -11,6 +11,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @PreAuthorize("isAuthenticated()")
 @RestController
 @RequestMapping("/order")
@@ -26,22 +28,15 @@ public class OrderController {
     }
 
     @GetMapping("/all")
-    public Authentication findAll(Authentication auth) {
-        orderService.findAll();
-        return auth;
+    public List<OrderDto> findAll(Authentication auth) {
+        return orderService.findOrdersByUsername(auth.getName());
     }
 
-    @GetMapping("/{userId}/user")
-    public OrderDto findOrder(@PathVariable("userId") Long id) {
-        return orderService.findById(id).get();
+
+    @PostMapping
+    public void createOrder(Authentication auth) {
+        orderService.createOrder(auth.getName());
     }
 
-    @PostMapping(consumes = "application/json", produces = "application/json")
-    public void saveOrder(@RequestBody OrderDto order) {
-        OrderDto newOrder = new OrderDto(order.getId(),
-                order.getDateTime(),
-                cartService.getSubTotal(),
-                order.getStatus());
-        orderService.addOrder(newOrder);
-    }
+
 }

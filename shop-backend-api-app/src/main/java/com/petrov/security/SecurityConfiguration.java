@@ -18,12 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 public class SecurityConfiguration {
 
     @Autowired
-    public void authConfigure(AuthenticationManagerBuilder auth,
-                              PasswordEncoder passwordEncoder) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("mem_user")
-                .password(passwordEncoder.encode("password"))
-                .roles("ADMIN", "SUPER_ADMIN");
+    public void authConfig(AuthenticationManagerBuilder auth,
+                           UserAuthService userAuthService) throws Exception {
+        auth.userDetailsService(userAuthService);
     }
 
     @Configuration

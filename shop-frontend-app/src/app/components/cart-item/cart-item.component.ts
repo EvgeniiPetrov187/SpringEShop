@@ -31,15 +31,30 @@ export class CartItemComponent implements OnInit {
     return this._lineItem;
   }
 
-  // delete(id: number) {
-  //   this.cartService.delete(id).subscribe(() => {
-  //     this.ngOnInit();
-  //   });
-  // }
-  //
-  // deleteQty(id: number, qty: number) {
-  //   this.cartService.deleteQty(id, qty).subscribe(() => {
-  //     this.ngOnInit();
-  //   });
-  // }
+  deleteQty(qty: number) {
+    if (this._lineItem) {
+      this.cartService.deleteQty(this._lineItem, qty).subscribe(
+        res => {
+          this.updated.emit();
+        },
+        error => {
+          console.log(error)
+        }
+      )
+    }
+  }
+
+  delete() {
+    if (this._lineItem) {
+      this.cartService.delete(this._lineItem)
+        .subscribe(
+          res => {
+            this.updated.emit();
+          },
+          error => {
+            console.log(error)
+          }
+        )
+    }
+  }
 }

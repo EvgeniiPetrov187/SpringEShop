@@ -1,27 +1,29 @@
 package com.petrov.controller.dto;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 import java.math.BigDecimal;
 
 
-@JsonPropertyOrder({"id","dateTime","totalPrice","status"})
+@JsonPropertyOrder({"id", "orderDate", "price", "status"})
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class OrderDto {
 
     private Long id;
 
-    private String dateTime;
+    private String orderDate;
 
     @JsonDeserialize(as = BigDecimal.class)
-    private BigDecimal totalPrice;
+    private BigDecimal price;
 
     private String status;
 
     public OrderDto(Long id, String dateTime, BigDecimal totalPrice, String status) {
         this.id = id;
-        this.dateTime = dateTime;
-        this.totalPrice = totalPrice;
+        this.orderDate = dateTime;
+        this.price = totalPrice;
         this.status = status;
     }
 
@@ -33,20 +35,20 @@ public class OrderDto {
         this.id = id;
     }
 
-    public String getDateTime() {
-        return dateTime;
+    public String getOrderDate() {
+        return orderDate;
     }
 
-    public void setDateTime(String dateTime) {
-        this.dateTime = dateTime;
+    public void setOrderDate(String orderDate) {
+        this.orderDate = orderDate;
     }
 
-    public BigDecimal getTotalPrice() {
-        return totalPrice;
+    public BigDecimal getPrice() {
+        return price;
     }
 
-    public void setTotalPrice(BigDecimal totalPrice) {
-        this.totalPrice = totalPrice;
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     public String getStatus() {
