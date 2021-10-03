@@ -20,5 +20,5 @@ public interface CartService {
 
     BigDecimal getSubTotal();
 
-    LineItem findByProduct(ProductDto productDto);
+    LineItem findByProduct(LineItem lineItem);
 }

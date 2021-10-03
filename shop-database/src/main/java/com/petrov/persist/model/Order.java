@@ -2,6 +2,7 @@ package com.petrov.persist.model;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -14,29 +15,28 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "date_time")
-    private String dateTime;
+    @Column(nullable = false, name = "order_date")
+    private LocalDateTime orderDate;
 
-    @Column(name = "total_price")
-    private BigDecimal totalPrice;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
 
-    @Column(name = "status")
-    private String status;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    public Order(Long id, String dateTime, BigDecimal totalPrice, String status) {
-        this.id = id;
-        this.dateTime = dateTime;
-        this.totalPrice = totalPrice;
-        this.status = status;
-    }
-
-    public Order(String dateTime, BigDecimal totalPrice, String status) {
-        this.dateTime = dateTime;
-        this.totalPrice = totalPrice;
-        this.status = status;
-    }
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderLineItem> orderLineItems;
 
     public Order() {
+    }
+
+    public Order(Long id, LocalDateTime orderDate, OrderStatus status, User user) {
+        this.id = id;
+        this.orderDate = orderDate;
+        this.status = status;
+        this.user = user;
     }
 
     public Long getId() {
@@ -47,27 +47,40 @@ public class Order {
         this.id = id;
     }
 
-    public String getDateTime() {
-        return dateTime;
+    public LocalDateTime getOrderDate() {
+        return orderDate;
     }
 
-    public void setDateTime(String dateTime) {
-        this.dateTime = dateTime;
+    public void setOrderDate(LocalDateTime orderDate) {
+        this.orderDate = orderDate;
     }
 
-    public String getStatus() {
+    public OrderStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(OrderStatus status) {
         this.status = status;
     }
 
-    public BigDecimal getTotalPrice() {
-        return totalPrice;
+    public User getUser() {
+        return user;
     }
-    public void setTotalPrice(BigDecimal totalPrice) {
-        this.totalPrice = totalPrice;
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<OrderLineItem> getOrderLineItems() {
+        return orderLineItems;
+    }
+
+    public void setOrderLineItems(List<OrderLineItem> orderLineItems) {
+        this.orderLineItems = orderLineItems;
+    }
+
+    public enum OrderStatus {
+        CREATED, PROCESSED, IN_DELIVERY, DELIVERED, CLOSED, CANCELED
     }
 }
 

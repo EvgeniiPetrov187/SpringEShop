@@ -12,9 +12,9 @@ import java.util.Optional;
 
 public interface OrderService {
 
-    List<OrderDto> findAll();
+//    List<OrderDto> findAll();
 
-    Optional<OrderDto> findById(Long id);
+    List<OrderDto> findOrdersByUsername(String username);
 
-    void addOrder(OrderDto order);
+    void createOrder(String username);
 }

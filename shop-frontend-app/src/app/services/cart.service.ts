@@ -25,19 +25,14 @@ export class CartService {
     return this.http.post('/api/v1/cart', dto);
   }
 
-  // public removeLineItem(lineItem: LineItem) {
-  //   return this.http.delete('api/v1/cart', ({
-  //     body: lineItem
-  //   }));
-  // }
-
-
-  public delete(id: number) {
-    return this.http.delete<LineItem>(`/api/v1/cart/${id}`);
+  public delete(lineItem: LineItem) {
+    return this.http.delete('api/v1/cart', ({
+      body: lineItem
+    }));
   }
 
-  public deleteQty(id: number, qty: number) {
-    return this.http.post(`/api/v1/cart/${id}`, qty);
+  public deleteQty(lineItem: LineItem, qty: number) {
+    return this.http.post(`/api/v1/cart/${qty}`, lineItem);
   }
 
   public clearCart() {

@@ -42,6 +42,10 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Picture> pictures = new ArrayList<>();
 
+    @OneToMany(mappedBy = "order")
+    private List<OrderLineItem> orderLineItems;
+
+
     public Product(Long id, String name, BigDecimal cost) {
         this.id = id;
         this.name = name;
@@ -122,6 +126,14 @@ public class Product {
 
     public void setPictures(List<Picture> pictures) {
         this.pictures = pictures;
+    }
+
+    public List<OrderLineItem> getOrderLineItems() {
+        return orderLineItems;
+    }
+
+    public void setOrderLineItems(List<OrderLineItem> orderLineItems) {
+        this.orderLineItems = orderLineItems;
     }
 }
 
