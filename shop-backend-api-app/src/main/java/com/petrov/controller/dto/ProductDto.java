@@ -1,9 +1,13 @@
 package com.petrov.controller.dto;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 public class ProductDto {
 
     private Long id;
@@ -12,6 +16,8 @@ public class ProductDto {
 
     private String description;
 
+    @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXTERNAL_PROPERTY, property = "type")
+    @JsonSubTypes({ @JsonSubTypes.Type(name = "BIG_DECIMAL", value = BigDecimal.class) })
     private BigDecimal cost;
 
     private CategoryDto category;

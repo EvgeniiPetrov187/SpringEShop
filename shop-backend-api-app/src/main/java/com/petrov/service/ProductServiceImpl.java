@@ -1,4 +1,4 @@
-package com.petrov.controller.service;
+package com.petrov.service;
 
 import com.petrov.controller.dto.BrandDto;
 import com.petrov.controller.dto.CategoryDto;
@@ -13,7 +13,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
 import java.util.Optional;

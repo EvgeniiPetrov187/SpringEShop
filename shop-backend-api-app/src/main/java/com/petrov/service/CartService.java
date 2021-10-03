@@ -1,7 +1,7 @@
-package com.petrov.controller.service;
+package com.petrov.service;
 
 import com.petrov.controller.dto.ProductDto;
-import com.petrov.controller.service.dto.LineItem;
+import com.petrov.service.dto.LineItem;
 
 import java.math.BigDecimal;
 import java.util.List;

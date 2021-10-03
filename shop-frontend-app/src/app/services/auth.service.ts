@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Credentials} from "../model/credentials";
 import {map} from "rxjs/operators";
+import {AuthResult} from "../model/auth-result";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +12,8 @@ export class AuthService {
 
   private currentUser?: Credentials;
 
+  public redirectUrl?: string;
+
   constructor(private http: HttpClient) {
     let data = localStorage.getItem('current_user');
     if (data) {
@@ -17,7 +21,7 @@ export class AuthService {
     }
   }
 
-  authenticate(credentials: Credentials) {
+  authenticate(credentials: Credentials) : Observable<AuthResult> {
 
     const headers = new HttpHeaders(credentials ? {
       authorization: 'Basic ' + btoa(credentials.username + ':' + credentials.password)
@@ -29,7 +33,7 @@ export class AuthService {
           if ('username' in resp) {
             this.currentUser = resp as Credentials;
             localStorage.setItem('current_user', JSON.stringify(resp));
-            return resp;
+            return new AuthResult(this.currentUser, this.redirectUrl);
           }
           throw new Error('Authentication error');
         })
