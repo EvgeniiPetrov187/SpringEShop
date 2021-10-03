@@ -1,0 +1,15 @@
+GET http://localhost:8589/api/v1/cart/all
+
+####
+
+GET http://localhost:8589/api/v1/picture/46
+
+####
+
+DELETE http://localhost:8589/api/v1/cart/0
+
+######
+
+GET http://localhost:8888/shop-backend-api/dev
+
+####
