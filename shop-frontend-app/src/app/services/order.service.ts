@@ -13,4 +13,10 @@ export class OrderService {
   public findOrdersByUser() {
     return this.http.get<Order[]>('/api/v1/order/all');
   }
+
+  public delete(order: Order){
+    return this.http.delete('api/v1/order', ({
+      body: order
+    }));
+  }
 }
