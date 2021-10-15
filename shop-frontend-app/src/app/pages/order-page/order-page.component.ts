@@ -1,6 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {OrderService} from "../../services/order.service";
 import {Order} from "../../model/order";
+import {OrderStatusService} from "../../services/order-status.service";
 
 export const ORDERS_URL = 'order';
 
@@ -13,7 +14,9 @@ export class OrderPageComponent implements OnInit {
 
   orders: Order[] = [];
 
-  constructor(private orderService: OrderService) {
+  @Output() updated = new EventEmitter();
+
+  constructor(private orderService: OrderService, private orderStatusService: OrderStatusService) {
   }
 
   ngOnInit(): void {
@@ -23,6 +26,19 @@ export class OrderPageComponent implements OnInit {
         },
         error => {
           console.log(error);
-        })
+        });
+    this.orderStatusService.onMessage('/order_out/order')
+      .subscribe(msg => console.log(`New message with status ${msg.state}`));
+  }
+
+  delete(order : Order) {
+    this.orderService.delete(order).subscribe(
+      res => {
+        this.ngOnInit()
+      },
+      error => {
+        console.log(error)
+      }
+    )
   }
 }
