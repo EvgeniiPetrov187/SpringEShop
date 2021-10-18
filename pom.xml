@@ -29,9 +29,12 @@
         <module>shop-admin-app</module>
         <module>shop-backend-api-app</module>
         <module>picture-service</module>
+        <module>picture-service-app</module>
         <module>spring-cloud-config</module>
         <module>spring-cloud-gateway</module>
         <module>spring-eureka</module>
+        <module>shop-delivery-service</module>
+        <module>spring-integration-demo</module>
     </modules>
 
     <dependencyManagement>
