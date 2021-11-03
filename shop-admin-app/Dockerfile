@@ -4,6 +4,7 @@ ARG JAR_FILE
 
 RUN microdnf install nc && microdnf clean all
 
+RUN mkdir -p /var/storage
 RUN mkdir -p /apps
 COPY ./target/${JAR_FILE} /apps/app.jar
 COPY ./entrypoint.sh /apps/entrypoint.sh
