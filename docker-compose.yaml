@@ -1,0 +1,94 @@
+version: '3'
+services:
+  cloud-config:
+    image: registry.heroku.com/geek-spring-cloud-config/web:latest
+    ports:
+      - 8888
+
+  shop-frontend-app:
+    image: shop-frontend-app
+    ports:
+      - 8080:80
+    depends_on:
+      - shop-admin-app
+      - shop-backend-api-app
+      - picture-service-app
+
+  shop-admin-app:
+    image: registry.heroku.com/geek-shop-admin-app/web:latest
+    ports:
+      - 8080
+    volumes:
+      - ./storage:/var/storage
+    command: bash -c "/apps/wait-for-service.sh db 3306 && /apps/wait-for-service.sh cloud-config 8888 && /apps/entrypoint.sh"
+    depends_on:
+      - db
+      - rabbitmq
+      - redis
+      - cloud-config
+
+  shop-backend-api-app:
+    image: registry.heroku.com/geek-shop-backend-api-app/web:latest
+    ports:
+      - 8080
+    volumes:
+      - file-storage:/var/storage
+      - ./storage:/var/storage
+    command: bash -c "/apps/wait-for-service.sh db 3306 && /apps/wait-for-service.sh cloud-config 8888 && /apps/entrypoint.sh"
+    depends_on:
+      - db
+      - rabbitmq
+      - redis
+      - cloud-config
+      - shop-delivery-service
+
+  picture-service-app:
+    image: registry.heroku.com/geek-picture-service-app/web:latest
+    ports:
+      - 8080
+    volumes:
+      #     - file-storage:/var/storage
+      - ./storage:/var/storage
+    command: bash -c "/apps/wait-for-service.sh db 3306 && /apps/wait-for-service.sh cloud-config 8888 && /apps/entrypoint.sh"
+    depends_on:
+      - db
+      - cloud-config
+
+  shop-delivery-service:
+    image: registry.heroku.com/geek-shop-delivery-service/web:latest
+    command: bash -c "/apps/wait-for-service.sh rabbitmq 5672 && /apps/wait-for-service.sh cloud-config 8888 && /apps/entrypoint.sh"
+    depends_on:
+      - rabbitmq
+
+  db:
+    #    image: postgres
+    #    restart: always
+    #    environment:
+    #      POSTGRES_PASSWORD: password
+    #    ports:
+    #    - 5432:5432
+
+    image: mysql:8.0.23
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+    ports:
+      - 3306
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  redis:
+    image: 'guest/guest:latest'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - 6379
+
+  rabbitmq:
+    image: 'guest/guest:latest'
+    ports:
+      - 5672
+      - 15672:15672
+
+volumes:
+  mysql-data:
+  file-storage:

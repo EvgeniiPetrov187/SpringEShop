@@ -4,6 +4,13 @@
     <option name="SPRING_BOOT_MAIN_CLASS" value="com.petrov.ShopBackendApiAppApplication" />
     <option name="ALTERNATIVE_JRE_PATH" />
     <option name="SHORTEN_COMMAND_LINE" value="NONE" />
+    <additionalParameters>
+      <param>
+        <option name="enabled" value="true" />
+        <option name="name" value="server.port=8089" />
+        <option name="value" value="" />
+      </param>
+    </additionalParameters>
     <method v="2">
       <option name="Make" enabled="true" />
     </method>
